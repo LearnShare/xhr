@@ -16,9 +16,10 @@ class HTTP {
     const {
       method = HttpMethod.GET,
       url,
+      headers = null,
       query = null,
       data = null,
-      timeout = 30 * 1000,
+      timeout = 0,
     } = req;
 
     this.xhr.timeout = timeout;
@@ -55,9 +56,21 @@ class HTTP {
       this.xhr.onerror = reject;
       this.xhr.ontimeout = reject;
 
-      this.xhr.open(method, reqUrl);
+      this.xhr.open(method, reqUrl, true);
+      this.setHeaders(headers);
+
       this.xhr.send(data);
     });
+  }
+
+  setHeaders(headers) {
+    if (!headers) {
+      return;
+    }
+
+    for (const key in headers) {
+      this.xhr.setRequestHeader(key, headers[key]);
+    }
   }
 }
 

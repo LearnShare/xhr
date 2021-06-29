@@ -13,7 +13,11 @@
 <body>
   <script>
     window.onload = () => {
-      XHR.get('http://localhost:3000/')
+      XHR.get('http://localhost:3000/json/', {
+        headers: {
+          'test-header': new Date().toISOString(),
+        },
+      })
         .then((res) => {
           console.log(res);
         })

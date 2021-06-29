@@ -9,6 +9,12 @@ app.get('/', (req, res) => {
   res.send('hello from api.');
 });
 
+app.get('/json/', (req, res) => {
+  res.send({
+    'test-header': req.get('test-header'),
+  });
+});
+
 app.get('/404/', (req, res) => {
   res.status(404)
     .send('not found.');
