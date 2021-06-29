@@ -5,6 +5,7 @@ const multer = require('multer');
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 app.use(multer().none());
 
 app.get('/', (req, res) => {
@@ -17,7 +18,21 @@ app.get('/json/', (req, res) => {
   });
 });
 
+app.post('/json/', (req, res) => {
+  // with express.json()
+  const {
+    username,
+    password,
+  } = req.body;
+
+  res.send({
+    username,
+    password,
+  });
+});
+
 app.post('/formdata/', (req, res) => {
+  // with multer().none()
   const {
     username,
     password,

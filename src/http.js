@@ -12,6 +12,7 @@ class HTTP {
     return this.send(req);
   }
 
+  // TODO auto set Content-Type for data
   send(req) {
     const {
       method = HttpMethod.GET,
