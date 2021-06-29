@@ -7,7 +7,7 @@ const XHR = (req) => new HTTP(req);
 
 XHR.get = (url, req) => {
   const reqConfig = {
-    method: HttpMethod.get,
+    method: HttpMethod.GET,
     ...req,
     url,
   };
@@ -15,31 +15,34 @@ XHR.get = (url, req) => {
   return new HTTP(reqConfig);
 };
 
-XHR.post = (url, req) => {
+XHR.post = (url, data, req) => {
   const reqConfig = {
-    method: HttpMethod.post,
+    method: HttpMethod.POST,
     ...req,
     url,
+    data,
   };
 
   return new HTTP(reqConfig);
 };
 
-XHR.put = (url, req) => {
+XHR.put = (url, data, req) => {
   const reqConfig = {
-    method: HttpMethod.put,
+    method: HttpMethod.PUT,
     ...req,
     url,
+    data,
   };
 
   return new HTTP(reqConfig);
 };
 
-XHR.patch = (url, req) => {
+XHR.patch = (url, data, req) => {
   const reqConfig = {
-    method: HttpMethod.patch,
+    method: HttpMethod.PATCH,
     ...req,
     url,
+    data,
   };
 
   return new HTTP(reqConfig);
@@ -47,7 +50,7 @@ XHR.patch = (url, req) => {
 
 XHR.delete = (url, req) => {
   const reqConfig = {
-    method: HttpMethod.delete,
+    method: HttpMethod.DELETE,
     ...req,
     url,
   };

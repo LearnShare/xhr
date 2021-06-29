@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer');
 
 const app = express();
 
 app.use(cors());
+app.use(multer().none());
 
 app.get('/', (req, res) => {
   res.send('hello from api.');
@@ -12,6 +14,18 @@ app.get('/', (req, res) => {
 app.get('/json/', (req, res) => {
   res.send({
     'test-header': req.get('test-header'),
+  });
+});
+
+app.post('/formdata/', (req, res) => {
+  const {
+    username,
+    password,
+  } = req.body;
+
+  res.send({
+    username,
+    password,
   });
 });
 

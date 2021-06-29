@@ -13,11 +13,11 @@
 <body>
   <script>
     window.onload = () => {
-      XHR.get('http://localhost:3000/json/', {
-        headers: {
-          'test-header': new Date().toISOString(),
-        },
-      })
+      const data = new FormData();
+      data.append('username', 'abc');
+      data.append('password', '123456isbad');
+
+      XHR.post('http://localhost:3000/formdata/', data)
         .then((res) => {
           console.log(res);
         })
