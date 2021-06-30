@@ -11,6 +11,7 @@
       async></script>
 </head>
 <body>
+  <input type="file" name="avatar" accept="image/*" id="avatar" >
   <script>
     window.onload = () => {
       XHR.post('http://localhost:3000/json/', {
@@ -36,6 +37,24 @@
           console.log(error);
         });
     };
+
+    function upload(name, file) {
+      const formdata = new FormData();
+      formdata.append(name, file);
+
+      XHR.post('http://localhost:3000/upload/', formdata)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
+    const avatarInput = document.getElementById('avatar');
+    avatarInput.addEventListener('change', (event) => {
+      upload('avatar', event.target.files[0]);
+    });
   </script>
 </body>
 </html>

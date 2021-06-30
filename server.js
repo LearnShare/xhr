@@ -4,9 +4,11 @@ const multer = require('multer');
 
 const app = express();
 
+const upload = multer({
+  dest: 'uploads/',
+});
+
 app.use(cors());
-app.use(express.json());
-app.use(multer().none());
 
 app.get('/', (req, res) => {
   res.send('hello from api.');
@@ -18,31 +20,45 @@ app.get('/json/', (req, res) => {
   });
 });
 
-app.post('/json/', (req, res) => {
-  // with express.json()
-  const {
-    username,
-    password,
-  } = req.body;
+app.post(
+  '/json/',
+  express.json(),
+  (req, res) => {
+    const {
+      username,
+      password,
+    } = req.body;
 
-  res.send({
-    username,
-    password,
-  });
-});
+    res.send({
+      username,
+      password,
+    });
+  },
+);
 
-app.post('/formdata/', (req, res) => {
-  // with multer().none()
-  const {
-    username,
-    password,
-  } = req.body;
+app.post(
+  '/formdata/',
+  upload.none(),
+  (req, res) => {
+    const {
+      username,
+      password,
+    } = req.body;
 
-  res.send({
-    username,
-    password,
-  });
-});
+    res.send({
+      username,
+      password,
+    });
+  },
+);
+
+app.post(
+  '/upload/',
+  upload.single('avatar'),
+  (req, res) => {
+    res.send(req.file);
+  },
+);
 
 app.get('/404/', (req, res) => {
   res.status(404)
