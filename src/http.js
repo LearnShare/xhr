@@ -4,6 +4,7 @@ import {
 
 import {
   parseQuery,
+  parseData,
 } from './utils.js';
 
 class HTTP {
@@ -12,7 +13,6 @@ class HTTP {
     return this.send(req);
   }
 
-  // TODO auto set Content-Type for data
   send(req) {
     const {
       method = HttpMethod.GET,
@@ -26,6 +26,10 @@ class HTTP {
     this.xhr.timeout = timeout;
 
     const reqUrl = parseQuery(url, query);
+    const {
+      reqHeaders,
+      reqData,
+    } = parseData(headers, data);
 
     return new Promise((resolve, reject) => {
       this.xhr.onload = () => {
@@ -38,7 +42,6 @@ class HTTP {
         if ((status >= 200
           && status < 300)
             || status === 304) {
-          // TODO return HttpResponse
           resolve({
             status,
             type: responseType,
@@ -58,9 +61,9 @@ class HTTP {
       this.xhr.ontimeout = reject;
 
       this.xhr.open(method, reqUrl, true);
-      this.setHeaders(headers);
+      this.setHeaders(reqHeaders);
 
-      this.xhr.send(data);
+      this.xhr.send(reqData);
     });
   }
 

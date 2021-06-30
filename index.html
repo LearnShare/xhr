@@ -13,14 +13,22 @@
 <body>
   <script>
     window.onload = () => {
-      XHR.post('http://localhost:3000/json/', JSON.stringify({
+      XHR.post('http://localhost:3000/json/', {
         username: 'abc',
         password: '123456isbad',
-      }), {
-        headers: {
-          'Content-Type': 'application/json',
-        },
       })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      const formdata = new FormData();
+      formdata.append('username', 'abc');
+      formdata.append('password', '123456isbad');
+
+      XHR.post('http://localhost:3000/formdata/', formdata)
         .then((res) => {
           console.log(res);
         })
