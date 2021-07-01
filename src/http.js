@@ -35,28 +35,32 @@ class HTTP {
       this.xhr.onload = () => {
         const {
           status,
-          responseType,
           response,
         } = this.xhr;
+
+        const resType = this.xhr.getResponseHeader('Content-Type');
+
+        const data = resType.includes('application/json')
+          ? JSON.parse(response)
+          : response;
 
         if ((status >= 200
           && status < 300)
             || status === 304) {
           resolve({
             status,
-            type: responseType,
-            response,
+            data,
           });
         } else {
           // TODO return error
           reject({
             status,
-            type: responseType,
-            response,
+            data,
           });
         }
       };
 
+      // TODO return error
       this.xhr.onerror = reject;
       this.xhr.ontimeout = reject;
 
